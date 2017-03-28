@@ -1,17 +1,25 @@
 from troposphere import Ref, Template, Parameter, Output
+from troposphere.ec2 import SecurityGroup
 import troposphere.ec2 as ec2
 template = Template()
-instance = ec2.Instance('JordansInstance')
-instance.ImageId = "ami-ebed508f"
-instance.InstanceType = "t2.micro"
 
 keyname_param = template.add_parameter(Parameter(
 	"KeyName",
 	Description="EC2 Keypair",
 	Type="String",
 ))
-instance.KeyName = Ref(keyname_param)
-ec2_instance = template.add_resource(instance)
+securityGroup_param = template.add_parameter(Parameter(
+	"SecurityGroup",
+	Description="Security Group ID",
+	Type="String"
+))
+ec2_instance = template.add_resource(Instance(
+	'JordansInstance',
+	ImageId = 'ami-ebed508f',
+	InstanceType = 't2.micro',
+	KeyName = Ref(keyname_param),
+	
+))
 template.add_output([
 	Output(
 		"InstanceId",
