@@ -1,0 +1,28 @@
+{
+    "Outputs": {
+        "InstanceId": {
+            "Description": "InstanceID of EC2 instance",
+            "Value": {
+                "Ref": "JordansInstance"
+            }
+        }
+    },
+    "Parameters": {
+        "KeyName": {
+            "Description": "EC2 Keypair",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "JordansInstance": {
+            "Properties": {
+                "ImageId": "ami-ebed508f",
+                "InstanceType": "t2.micro",
+                "KeyName": {
+                    "Ref": "KeyName"
+                }
+            },
+            "Type": "AWS::EC2::Instance"
+        }
+    }
+}
